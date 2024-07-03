@@ -33,30 +33,32 @@ public class ActorAdapter {
             System.out.print("Ingrese la opción: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    service.createActor(newActor(false, scanner));
+                    service.createActor(newActor(false, scanner, null));
                     break;
 
                 case 2:
-
-                    service.updateActor(newActor(true, scanner));
+                    Actor actorToUpdate = getActor();
+                    if (actorToUpdate != null) {
+                        service.updateActor(newActor(true, scanner, actorToUpdate));
+                    }
                     break;
 
                 case 3:
-                    getActor().toString();
+                    System.out.println(getActor());
                     break;
 
                 case 4:
-
+                    service.deleteActor(getId());
                     break;
 
                 case 5:
                     List<Actor> actors = service.getAllActor();
                     for (Actor item : actors) {
-                        item.toString();
+                        System.out.println(item);
                     }
                     break;
 
@@ -69,25 +71,31 @@ public class ActorAdapter {
         }
     }
 
-    public Actor getActor() {
+    public int getId(){
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el id del actor: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        Optional<Actor> actor = service.getActorById(id);
+        return id;
+    }
+
+    public Actor getActor() {
+        Optional<Actor> actor = service.getActorById(getId());
         if (actor.isPresent()) {
             return actor.get();
         }
+        System.out.println("");
+        System.out.println("Invalid ID. Id not found!");
+        System.out.println("");
         return null;
     }
 
-    public Actor newActor(Boolean isEdit, Scanner scanner) {
-        Actor actor;
+    public Actor newActor(Boolean isEdit, Scanner scanner, Actor data) {
+        Actor actor = isEdit ? data : new Actor();
 
         if (isEdit) {
-            actor = getActor();
-            actor.toString();
+            System.out.println(actor);
             System.out.print("");
         }
 
@@ -107,7 +115,10 @@ public class ActorAdapter {
         scanner.nextLine();
 
         
-        actor = new Actor(name, age, countryId, genreId);
+        actor.setName(name);
+        actor.setAge(age);
+        actor.setCountryId(countryId);
+        actor.setGenreId(genreId);
         return actor;
     }
 

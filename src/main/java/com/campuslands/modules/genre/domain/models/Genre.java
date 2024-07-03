@@ -4,28 +4,37 @@ package com.campuslands.modules.genre.domain.models;
 public class Genre {
 
     private int genreId;
-    private String name;
+    private String descripcion;
 
 
     
-    public Genre(int genreId, String name) {
+    public Genre(int genreId, String descripcion) {
         this.genreId = genreId;
-        this.name = name;
+        this.descripcion = descripcion;
     }
 
-    public int getGenreId() {
+    public Genre() {
+		//TODO Auto-generated constructor stub
+	}
+
+	public int getGenreId() {
         return genreId;
     }
     public void setGenreId(int genreId) {
         this.genreId = genreId;
     }
-    public String getName() {
-        return name;
+    public String getDescripcion() {
+        return descripcion;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
+    @Override
+    public String toString() {
+        return "Genre [genreId=" + genreId + ", descripcion=" + descripcion + "]";
+    }
 
+    
     
 }

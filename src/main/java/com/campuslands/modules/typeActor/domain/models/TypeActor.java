@@ -3,20 +3,24 @@ package com.campuslands.modules.typeActor.domain.models;
 
 public class TypeActor {
 
-    private int actorTypeId;
+    private int id;
     private String description;
 
     
-    public TypeActor(int actorTypeId, String description) {
-        this.actorTypeId = actorTypeId;
+    public TypeActor(int id, String description) {
+        this.id = id;
         this.description = description;
     }
 
-    public int getActorTypeId() {
-        return actorTypeId;
+    public TypeActor() {
+        //TODO Auto-generated constructor stub
     }
-    public void setActorTypeId(int actorTypeId) {
-        this.actorTypeId = actorTypeId;
+
+    public int getId() {
+        return id;
+    }
+    public void setActorTypeId(int id) {
+        this.id = id;
     }
     public String getDescription() {
         return description;
@@ -25,7 +29,8 @@ public class TypeActor {
         this.description = description;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "TypeActor [id=" + id + ", description=" + description + "]";
+    }
 }

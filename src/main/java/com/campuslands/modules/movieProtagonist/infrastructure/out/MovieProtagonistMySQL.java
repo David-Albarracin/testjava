@@ -44,7 +44,7 @@ public class MovieProtagonistMySQL extends MySQL implements MovieProtagonistRepo
     @Override
     public void update(MovieProtagonist movieProtagonist) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE peliculaprotagonista SET movieId = ?, actorId = ?, actorTypeId = ? WHERE id = ?";
+            String query = "UPDATE peliculaprotagonista SET idpelicula = ?, idprotagonista = ?, idtipoactor = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, movieProtagonist.getMovieId());
                 statement.setInt(2, movieProtagonist.getActorId());
@@ -79,15 +79,15 @@ public class MovieProtagonistMySQL extends MySQL implements MovieProtagonistRepo
     @Override
     public Optional<MovieProtagonist> findById(int id) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT movieId, actorId, actorTypeId FROM peliculaprotagonista WHERE id = ?";
+            String query = "SELECT idpelicula, idprotagonista, idtipoactor FROM peliculaprotagonista WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         MovieProtagonist movieProtagonist = new MovieProtagonist(
-                                resultSet.getInt("movieId"),
-                                resultSet.getInt("actorId"),
-                                resultSet.getInt("actorTypeId")
+                                resultSet.getInt("idpelicula"),
+                                resultSet.getInt("idprotagonista"),
+                                resultSet.getInt("idtipoactor")
                                 );
                         return Optional.of(movieProtagonist);
                     }
@@ -103,14 +103,14 @@ public class MovieProtagonistMySQL extends MySQL implements MovieProtagonistRepo
     public List<MovieProtagonist> findAll() {
         List<MovieProtagonist> movieProtagonists = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT movieId, actorId, actorTypeId FROM peliculaprotagonista";
+            String query = "SELECT idpelicula, idprotagonista, idtipoactor FROM peliculaprotagonista";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     MovieProtagonist movieProtagonist = new MovieProtagonist(
-                                resultSet.getInt("movieId"),
-                                resultSet.getInt("actorId"),
-                                resultSet.getInt("actorTypeId")
+                                resultSet.getInt("idpelicula"),
+                                resultSet.getInt("idprotagonista"),
+                                resultSet.getInt("idtipoactor")
                                 );
                     movieProtagonists.add(movieProtagonist);
                 }

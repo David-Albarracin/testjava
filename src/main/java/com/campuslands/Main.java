@@ -2,7 +2,7 @@ package com.campuslands;
 
 import java.util.Scanner;
 
-import com.campuslands.modules.actor.domain.models.Actor;
+
 import com.campuslands.modules.actor.infrastructure.out.ActorOutModule;
 import com.campuslands.modules.country.infrastructure.out.CountryOutModule;
 import com.campuslands.modules.format.infrastructure.out.FormatOutModule;
@@ -17,9 +17,11 @@ public class Main {
     }
 
     public static void menu() {
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            System.out.println("");
             System.out.println("Películas Campuslands");
             System.out.println("1. Gestionar Actores");
             System.out.println("2. Gestionar Películas");
@@ -35,7 +37,7 @@ public class Main {
             System.out.print("Ingrese la opción: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -72,10 +74,12 @@ public class Main {
                     movieProtagonistOutModule.module().start();
                     break;
                 case 8:
-                    
+                    MovieOutModule movieOutModuleInfo = new MovieOutModule();
+                    movieOutModuleInfo.infoMovie();
                     break;
                 case 9:
-
+                    MovieOutModule movieOutModuleActors = new MovieOutModule();
+                    movieOutModuleActors.infoMovieActors();
                     break;
                 case 10:
                     return;

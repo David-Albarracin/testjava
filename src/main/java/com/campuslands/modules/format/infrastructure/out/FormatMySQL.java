@@ -24,9 +24,9 @@ public class FormatMySQL extends MySQL implements FormatRepository {
     @Override
     public void save(Format format) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "INSERT INTO format (name) VALUES (?)";
+            String query = "INSERT INTO formato (descripcion) VALUES (?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, format.getName());
+                statement.setString(1, format.getDescripcion());
 
                 statement.executeUpdate();
                 System.out.println("Format created successfully!");
@@ -39,9 +39,9 @@ public class FormatMySQL extends MySQL implements FormatRepository {
     @Override
     public void update(Format format) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE format SET name = ? WHERE id = ?";
+            String query = "UPDATE formato SET descripcion = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, format.getName());
+                statement.setString(1, format.getDescripcion());
 
                 statement.executeUpdate();
                 System.out.println("Format updated successfully!");
@@ -55,7 +55,7 @@ public class FormatMySQL extends MySQL implements FormatRepository {
     @Override
     public void delete(int formatId) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "DELETE FROM format WHERE id = ?";
+            String query = "DELETE FROM formato WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, formatId);
 
@@ -72,14 +72,14 @@ public class FormatMySQL extends MySQL implements FormatRepository {
     @Override
     public Optional<Format> findById(int id) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, name FROM format WHERE id = ?";
+            String query = "SELECT id, descripcion FROM formato WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         Format format = new Format(
                                 resultSet.getInt("id"),
-                                resultSet.getString("name")
+                                resultSet.getString("descripcion")
                                 );
                         return Optional.of(format);
                     }
@@ -95,13 +95,13 @@ public class FormatMySQL extends MySQL implements FormatRepository {
     public List<Format> findAll() {
         List<Format> formats = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, name FROM format";
+            String query = "SELECT id, descripcion FROM formato";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Format format = new Format(
                                 resultSet.getInt("id"),
-                                resultSet.getString("name")
+                                resultSet.getString("descripcion")
                                 );
                     formats.add(format);
                 }

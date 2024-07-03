@@ -2,7 +2,7 @@
 
 * Integrantes:
 
-    Edgar Benjamin David Albarracin Sanabria
-    Juan Pablo Cardenas Gonzalez
+    1. Edgar Benjamin David Albarracin Sanabria
+    2. Juan Pablo Cardenas Gonzalez
 
 

@@ -29,7 +29,7 @@ public class CountryMySQL extends MySQL implements CountryRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO pais (descripcion) VALUES (?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getName());
+                statement.setString(1, country.getDescripcion());
 
                 statement.executeUpdate();
                 System.out.println("Country created successfully!");
@@ -44,8 +44,7 @@ public class CountryMySQL extends MySQL implements CountryRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE pais SET descripcion = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getName());
-                statement.setString(2, country.getNationality());
+                statement.setString(1, country.getDescripcion());
                 statement.setInt(3, country.getCountryId());
 
                 statement.executeUpdate();
@@ -84,7 +83,6 @@ public class CountryMySQL extends MySQL implements CountryRepository {
                     if (resultSet.next()) {
                         Country country = new Country(
                                 resultSet.getInt("id"),
-                                resultSet.getString("descripcion"),
                                 resultSet.getString("descripcion")
                                 );
                         return Optional.of(country);
@@ -107,7 +105,6 @@ public class CountryMySQL extends MySQL implements CountryRepository {
                 while (resultSet.next()) {
                     Country country = new Country(
                                 resultSet.getInt("id"),
-                                resultSet.getString("descripcion"),
                                 resultSet.getString("descripcion")
                                 );
                     countries.add(country);

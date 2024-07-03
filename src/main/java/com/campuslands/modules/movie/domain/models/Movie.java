@@ -20,6 +20,10 @@ public class Movie {
         this.sinopsis = sinopsis;
     }
 
+    public Movie() {
+        //TODO Auto-generated constructor stub
+    }
+
     public int getMovieId() {
         return movieId;
     }
@@ -51,9 +55,14 @@ public class Movie {
         this.sinopsis = sinopsis;
     }
 
+    @Override
+    public String toString() {
+        return "Movie [movieId=" + movieId + ", code=" + code + ", name=" + name + ", duration=" + duration
+                + ", sinopsis=" + sinopsis + "]";
+    }
 
 
-
+    
 
     
 

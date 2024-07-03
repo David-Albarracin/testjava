@@ -41,6 +41,7 @@ public class ActorMySQL extends MySQL implements ActorRepository {
 
     @Override
     public void update(Actor actor) {
+        
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE actor SET nombre = ?, edad = ?, idnacionalidad = ?, idgenero = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {

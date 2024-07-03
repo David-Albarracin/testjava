@@ -5,24 +5,28 @@ package com.campuslands.modules.movieFormat.domain.models;
  */
 public class MovieFormat {
 
-    private String movieFormatId;
-    private int formatId;
+    private String id;
     private int movieId;
+    private int formatId;
     private int amount;
 
     
     public MovieFormat(int formatId, int movieId, int amount) {
-        this.movieFormatId = String.valueOf(formatId) + String.valueOf(movieId);
+        this.id = String.valueOf(formatId) + String.valueOf(movieId);
         this.formatId = formatId;
         this.movieId = movieId;
         this.amount = amount;
     }
 
-    public String getId() {
-        return movieFormatId;
+    public MovieFormat() {
+        //TODO Auto-generated constructor stub
     }
-    public void setMovieFormatId(String movieFormatId) {
-        this.movieFormatId = movieFormatId;
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     public int getFormatId() {
         return formatId;
@@ -43,6 +47,11 @@ public class MovieFormat {
         this.amount = amount;
     }
 
+    @Override
+    public String toString() {
+        return "MovieFormat [id=" + id + ", movieId=" + movieId + ", formatId=" + formatId + ", amount=" + amount + "]";
+    }
 
+    
     
 }

@@ -18,23 +18,23 @@ public class FormatService {
         this.repository = repository;
     }
 
-    public void createActor(Format data) {
+    public void createFormat(Format data) {
         repository.save(data);
     }
 
-    public void updateActor(Format data) {
+    public void updateFormat(Format data) {
         repository.update(data);
     }
 
-    public Optional<Format> getActorById(int id) {
+    public Optional<Format> getFormatById(int id) {
         return repository.findById(id);
     }
 
-    public void deleteActor(int id) {
+    public void deleteFormat(int id) {
         repository.delete(id);
     }
 
-    public List<Format> getAllActor() {
+    public List<Format> getAllFormat() {
         return repository.findAll();
     }
 }

@@ -18,23 +18,23 @@ public class CountryService {
         this.repository = repository;
     }
 
-    public void createActor(Country data) {
+    public void createCountry(Country data) {
         repository.save(data);
     }
 
-    public void updateActor(Country data) {
+    public void updateCountry(Country data) {
         repository.update(data);
     }
 
-    public Optional<Country> getActorById(int id) {
+    public Optional<Country> getCountryById(int id) {
         return repository.findById(id);
     }
 
-    public void deleteActor(int id) {
+    public void deleteCountry(int id) {
         repository.delete(id);
     }
 
-    public List<Country> getAllActor() {
+    public List<Country> getAllCountry() {
         return repository.findAll();
     }
     

@@ -82,7 +82,7 @@ public class MovieMySQL extends MySQL implements MovieRepository {
     @Override
     public Optional<Movie> findById(int id) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, codinterno ,nombre, duration, sinopsis FROM pelicula WHERE id = ?";
+            String query = "SELECT id, codinterno ,nombre, duracion, sinopsis FROM pelicula WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -91,7 +91,7 @@ public class MovieMySQL extends MySQL implements MovieRepository {
                                 resultSet.getInt("id"),
                                 resultSet.getString("codinterno"),
                                 resultSet.getString("nombre"),
-                                resultSet.getString("duration"),
+                                resultSet.getString("duracion"),
                                 resultSet.getString("sinopsis")
                                 );
                         return Optional.of(movie);
@@ -108,7 +108,7 @@ public class MovieMySQL extends MySQL implements MovieRepository {
     public List<Movie> findAll() {
         List<Movie> movies = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id, codinterno ,nombre, duration, sinopsis FROM pelicula";
+            String query = "SELECT id, codinterno ,nombre, duracion, sinopsis FROM pelicula";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -116,7 +116,7 @@ public class MovieMySQL extends MySQL implements MovieRepository {
                                 resultSet.getInt("id"),
                                 resultSet.getString("codinterno"),
                                 resultSet.getString("nombre"),
-                                resultSet.getString("duration"),
+                                resultSet.getString("duracion"),
                                 resultSet.getString("sinopsis")
                                 );
                     movies.add(movie);
@@ -126,6 +126,50 @@ public class MovieMySQL extends MySQL implements MovieRepository {
             e.printStackTrace();
         }
         return movies;
+    }
+
+    public void findDetailedInfoById(int movieId) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String query = "SELECT " +
+                    "p.id, " +
+                    "p.codinterno, " +
+                    "p.nombre, " +
+                    "p.duracion, " +
+                    "p.sinopsis, " +
+                    "GROUP_CONCAT(DISTINCT CONCAT(f.descripcion, ' (Cantidad: ', pf.cantidad, ')') SEPARATOR ', ') AS formatos, "
+                    +
+                    "GROUP_CONCAT(DISTINCT CONCAT(a.nombre, ' (Edad: ', a.edad, ', Nacionalidad: ', pa.descripcion, ', Género: ', g.descripcion, ', Tipo: ', ta.descripcion, ')') SEPARATOR '; ') AS actores "
+                    +
+                    "FROM pelicula p " +
+                    "LEFT JOIN peliculaformato pf ON p.id = pf.idpelicula " +
+                    "LEFT JOIN formato f ON pf.idformato = f.id " +
+                    "LEFT JOIN peliculaprotagonista pp ON p.id = pp.idpelicula " +
+                    "LEFT JOIN actor a ON pp.idprotagonista = a.id " +
+                    "LEFT JOIN pais pa ON a.idnacionalidad = pa.id " +
+                    "LEFT JOIN genero g ON a.idgenero = g.id " +
+                    "LEFT JOIN tipoactor ta ON pp.idtipoactor = ta.id " +
+                    "WHERE p.id = ? " +
+                    "GROUP BY p.id, p.codinterno, p.nombre, p.duracion, p.sinopsis";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, movieId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        System.out.println("");
+                        System.out.println("Movie ID: " + resultSet.getInt("id"));
+                        System.out.println("Code: " + resultSet.getString("codinterno"));
+                        System.out.println("Name: " + resultSet.getString("nombre"));
+                        System.out.println("Duration: " + resultSet.getString("duracion"));
+                        System.out.println("Sinopsis: " + resultSet.getString("sinopsis"));
+                        System.out.println("Formats: " + resultSet.getString("formatos"));
+                        System.out.println("Actors: " + resultSet.getString("actores"));
+                    } else {
+                        System.out.println("No movie found with ID: " + movieId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
 }

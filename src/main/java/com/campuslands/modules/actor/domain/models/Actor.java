@@ -13,12 +13,7 @@ public class Actor {
     int genreId;
 
 
-    public Actor(String name, int age, int countryId, int genreId) {
-        this.name = name;
-        this.age = age;
-        this.countryId = countryId;
-        this.genreId = genreId;
-    }
+    public Actor() {}
 
     public Actor(int actorId, String name, int age, int countryId, int genreId) {
         this.actorId = actorId;
@@ -59,10 +54,10 @@ public class Actor {
         this.genreId = genreId;
     }
 
-    
     @Override
     public String toString() {
-        return super.toString();
+        return "Actor [actorId=" + actorId + ", name=" + name + ", age=" + age + ", countryId=" + countryId
+                + ", genreId=" + genreId + "]";
     }
     
 }

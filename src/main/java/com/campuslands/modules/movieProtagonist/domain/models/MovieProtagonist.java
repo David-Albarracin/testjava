@@ -3,7 +3,7 @@ package com.campuslands.modules.movieProtagonist.domain.models;
 
 public class MovieProtagonist {
 
-    private String movieProtagonistId;
+    private String id;
     private int movieId;
     private int actorId;
     private int actorTypeId;
@@ -11,17 +11,21 @@ public class MovieProtagonist {
 
     
     public MovieProtagonist(int movieId, int actorId, int actorTypeId) {
-        this.movieProtagonistId = String.valueOf(movieId) + String.valueOf(actorId);
+        this.id = String.valueOf(movieId) + String.valueOf(actorId);
         this.movieId = movieId;
         this.actorId = actorId;
         this.actorTypeId = actorTypeId;
     }
 
-    public String getMovieProtagonistId() {
-        return movieProtagonistId;
+    public MovieProtagonist() {
+		//TODO Auto-generated constructor stub
+	}
+
+	public String getId() {
+        return id;
     }
-    public void setMovieProtagonistId(String movieProtagonistId) {
-        this.movieProtagonistId = movieProtagonistId;
+    public void setId(String id) {
+        this.id = id;
     }
     public int getMovieId() {
         return movieId;
@@ -42,6 +46,13 @@ public class MovieProtagonist {
         this.actorTypeId = actorTypeId;
     }
 
+    @Override
+    public String toString() {
+        return "MovieProtagonist [id=" + id + ", movieId=" + movieId + ", actorId=" + actorId + ", actorTypeId="
+                + actorTypeId + "]";
+    }
+
+    
     
     
 }

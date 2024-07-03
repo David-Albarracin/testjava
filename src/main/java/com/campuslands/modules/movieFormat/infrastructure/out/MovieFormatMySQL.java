@@ -27,10 +27,10 @@ public class MovieFormatMySQL extends MySQL implements MovieFormatRepository {
     @Override
     public void save(MovieFormat movieFormat) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "INSERT INTO movie_format (formatId, movieId, amount) VALUES (?, ?, ?)";
+            String query = "INSERT INTO peliculaformato (idpelicula, idformato, cantidad) VALUES (?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, movieFormat.getFormatId());
-                statement.setInt(2, movieFormat.getMovieId());
+                statement.setInt(1, movieFormat.getMovieId());
+                statement.setInt(2, movieFormat.getFormatId());
                 statement.setInt(3, movieFormat.getAmount());
 
                 statement.executeUpdate();
@@ -44,10 +44,10 @@ public class MovieFormatMySQL extends MySQL implements MovieFormatRepository {
     @Override
     public void update(MovieFormat movieFormat) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE movie_format SET formatId = ?, movieId = ?, amount = ? WHERE id = ?";
+            String query = "UPDATE peliculaformato SET idpelicula = ?, idformato = ?, cantidad = ? WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, movieFormat.getFormatId());
-                statement.setInt(2, movieFormat.getMovieId());
+                statement.setInt(1, movieFormat.getMovieId());
+                statement.setInt(2, movieFormat.getFormatId());
                 statement.setInt(3, movieFormat.getAmount());
                 statement.setString(4, movieFormat.getId());
 
@@ -63,7 +63,7 @@ public class MovieFormatMySQL extends MySQL implements MovieFormatRepository {
     @Override
     public void delete(int movieFormatId) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "DELETE FROM movie_format WHERE id = ?";
+            String query = "DELETE FROM peliculaformato WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, movieFormatId);
 
@@ -78,15 +78,15 @@ public class MovieFormatMySQL extends MySQL implements MovieFormatRepository {
     @Override
     public Optional<MovieFormat> findById(int id) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT formatId, movieId, amount FROM movie_format WHERE id = ?";
+            String query = "SELECT idpelicula, idformato, cantidad FROM peliculaformato WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         MovieFormat movieFormat = new MovieFormat(
-                                resultSet.getInt("formatId"),
-                                resultSet.getInt("movieId"),
-                                resultSet.getInt("amount")
+                                resultSet.getInt("idpelicula"),
+                                resultSet.getInt("idformato"),
+                                resultSet.getInt("cantidad")
                                 );
                         return Optional.of(movieFormat);
                     }
@@ -102,14 +102,14 @@ public class MovieFormatMySQL extends MySQL implements MovieFormatRepository {
     public List<MovieFormat> findAll() {
         List<MovieFormat> movieFormats = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT formatId, movieId, amount FROM movie_format";
+            String query = "SELECT idpelicula, idformato, cantidad FROM peliculaformato";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     MovieFormat movieFormat = new MovieFormat(
-                                resultSet.getInt("formatId"),
-                                resultSet.getInt("movieId"),
-                                resultSet.getInt("amount")
+                                resultSet.getInt("idpelicula"),
+                                resultSet.getInt("idformato"),
+                                resultSet.getInt("cantidad")
                                 );
                     movieFormats.add(movieFormat);
                 }
